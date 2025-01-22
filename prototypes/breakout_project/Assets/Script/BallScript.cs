@@ -14,10 +14,13 @@ public class BallScript : MonoBehaviour
     private Color yellow;
     private Color green;
     private Color blue;
+    private GameObject remove_ball_point_object;
+    private Remove_Ball_point remove_Ball_Point;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-  
+        remove_ball_point_object = GameObject.Find("Remove_Ball_point");
+        remove_Ball_Point = remove_ball_point_object.GetComponent<Remove_Ball_point>();
         int randomNumber = Random.Range(0, 2);
         if (randomNumber == 1){
             rb.linearVelocity = new Vector3(-5, -10, 0);
@@ -46,6 +49,7 @@ public class BallScript : MonoBehaviour
             {
                 rb.linearVelocity = new Vector3(-10,20,0);
                 print("red");
+
             }
             else if(color == orange){
                 rb.linearVelocity = new Vector3(9,-18,0);
@@ -62,6 +66,9 @@ public class BallScript : MonoBehaviour
             else{
                 rb.linearVelocity = new Vector3(-6,12,0);
                 print("blue");
+            }
+            if (remove_Ball_Point != null){
+                remove_Ball_Point.ReceiveSignal();
             }
             Destroy(collision.gameObject);
 
