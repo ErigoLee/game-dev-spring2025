@@ -12,4 +12,4 @@ If you press the space bar, the ball reappears above the base object.
 ![image](https://github.com/user-attachments/assets/c65cd4e2-b68b-4329-a94d-e9d84140c7fc)
 
 Please play my Breakout game! 
-Here’s the link: https://erigolee.github.io/game-dev-spring2025/prototypes/breakout/
+Here’s the link: [https://erigolee.github.io/game-dev-spring2025/prototypes/breakout/](https://erigolee.github.io/game-dev-spring2025/builds/breakout-1)
