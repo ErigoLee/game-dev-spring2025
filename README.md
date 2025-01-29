@@ -13,3 +13,13 @@ If you press the space bar, the ball reappears above the base object.
 
 Please play my Breakout game! 
 Here’s the link: [https://erigolee.github.io/game-dev-spring2025/prototypes/breakout/](https://erigolee.github.io/game-dev-spring2025/builds/breakout-1)
+
+
+## Assignmnet2: Break-out game
+By incorporating the Polish element with my groupmate, each Breakout game adds more fun elements than before.
+2a: Based on my own breakout game, we added particle and sound effects.
+2b: Based on my groupmate's breakout game, we added particle and sound effects.
+2a
+![image](https://github.com/user-attachments/assets/cf598934-c2cc-4a17-ae57-8685287d7720)
+2b
+![image](https://github.com/user-attachments/assets/0439783a-e38e-464f-837a-ffc21b0920c6)
