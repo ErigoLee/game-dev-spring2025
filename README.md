@@ -21,6 +21,7 @@ By incorporating the Polish element with my groupmate, each Breakout game adds m
 2a
 ![image](https://github.com/user-attachments/assets/cf598934-c2cc-4a17-ae57-8685287d7720)
 Please play my Breakout game! Here’s the link: https://erigolee.github.io/game-dev-spring2025/builds/breakout-2a/
+
 2b
 ![image](https://github.com/user-attachments/assets/0439783a-e38e-464f-837a-ffc21b0920c6)
 Please play my Breakout game! Here’s the link: https://erigolee.github.io/game-dev-spring2025/builds/breakout-2b/
