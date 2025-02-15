@@ -14,15 +14,16 @@ If you press the space bar, the ball reappears above the base object.
 
 ## Assignmnet2: Break-out game
 By incorporating the Polish element with my groupmate, each Breakout game adds more fun elements than before.
-2a: Based on my own breakout game, we added particle and sound effects.
-2b: Based on my groupmate's breakout game, we added particle and sound effects.
+
+2a: Based on my own Breakout game, we added particle and sound effects. My groupmate pointed out that the paddle passed through the wall and suggested using the Mathf.Clamp function to solve the problem. She also suggested adding a level-up feature after finishing the game. However, I do not have enough time to implement this function.
+2b: While reviewing my groupmate's Breakout game, I suggested adding sound effects to the game. 
 
 
 [2a Break-out game](https://erigolee.github.io/game-dev-spring2025/builds/breakout-2a/)
-![image](https://github.com/user-attachments/assets/cf598934-c2cc-4a17-ae57-8685287d7720)
 Please play my Breakout game! 
-
+![image](https://github.com/user-attachments/assets/cf598934-c2cc-4a17-ae57-8685287d7720)
 
 [2b Break-out game](https://erigolee.github.io/game-dev-spring2025/builds/breakout-2b/)
-![image](https://github.com/user-attachments/assets/0439783a-e38e-464f-837a-ffc21b0920c6)
 Please play my Breakout game! 
+![image](https://github.com/user-attachments/assets/0439783a-e38e-464f-837a-ffc21b0920c6)
+
