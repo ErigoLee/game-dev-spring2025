@@ -2,7 +2,7 @@
 Repository for game development I class in Spring 2025
 
 
-# Assignment1: Break-out game[](https://erigolee.github.io/game-dev-spring2025/builds/breakout-1/)
+# Assignment1: [Break-out game](https://erigolee.github.io/game-dev-spring2025/builds/breakout-1/)
 Based on the materials from the lecture, I customized the Breakout game.
 I divided the blocks into five different colors.
 If the ball hits a blue block, its velocity remains unchanged.
