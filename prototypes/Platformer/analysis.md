@@ -13,7 +13,7 @@ In the game of Super Mario, if the player moves to the right beyond a certain di
 ## Sonic
 ![image](https://github.com/user-attachments/assets/0a5131ee-95ca-4357-9dcd-1b9e0f638da3)
 
-In the game of Sonic,
+In the game of Sonic, unlike the Mario game, if the player moves too far to the right, the player can go back to the left. Without jump skills, the player smoothly moves from left to right or from right to left. However, incorporating jump skills, 
 
 
 
