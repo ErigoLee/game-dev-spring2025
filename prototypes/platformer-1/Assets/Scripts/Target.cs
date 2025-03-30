@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
+    private GameManager gameManager;
+
+    void Start()
+    {
+        GameObject obj = GameObject.FindWithTag("GM");
+        gameManager = obj.GetComponent<GameManager>();
+    }
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Bullet")){

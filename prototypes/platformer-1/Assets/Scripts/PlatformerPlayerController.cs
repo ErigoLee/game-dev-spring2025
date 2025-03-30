@@ -29,11 +29,17 @@ public class PlatformerPlayerController : MonoBehaviour
     [SerializeField]
     private GameObject bulletSpawnPoint;
 
+
+    //level2 
+    private int bullets;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         cc = GetComponent<CharacterController>();
         bulletTimer = false;
+        bullets = gameManager.GettingBullets();
+        
     }
 
     // Update is called once per frame
@@ -104,9 +110,27 @@ public class PlatformerPlayerController : MonoBehaviour
 
         Vector3 nextPostion = transform.position + velocity * Time.deltaTime;
 
-        if (nextPostion.x < -39f || nextPostion.x > 39f || nextPostion.z < -30 || nextPostion.z >38.8){
-            velocity = Vector3.zero;
-        } 
+        int level = gameManager.GettingLevel();
+
+        switch (level){
+            case 0: // Temporary
+                if (nextPostion.x < -59f || nextPostion.x > 59f || nextPostion.z < -50f || nextPostion.z >58f){
+                    velocity = Vector3.zero;
+                }
+            break;
+            case 1:
+                if (nextPostion.x < -39f || nextPostion.x > 39f || nextPostion.z < -30 || nextPostion.z >38.8){
+                    velocity = Vector3.zero;
+                } 
+            break;
+            case 2:
+                if (nextPostion.x < -59f || nextPostion.x > 59f || nextPostion.z < -50f || nextPostion.z >58f){
+                    velocity = Vector3.zero;
+                } 
+            break;
+        }
+
+        
 
 
         // Limit movement speed
@@ -128,8 +152,21 @@ public class PlatformerPlayerController : MonoBehaviour
         else{
             if (Input.GetKey(KeyCode.X))
             {
-                Instantiate(bullet,bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-                bulletTimer = true;
+                if(level == 0 || level == 2){
+                    bullets = gameManager.GettingBullets();
+                    if(bullets > 0){
+                        bullets--;
+                        Instantiate(bullet,bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+                        bulletTimer = true;
+                        gameManager.ReducingBullets();
+                    }
+                    
+                }
+                else{
+                    Instantiate(bullet,bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+                    bulletTimer = true;
+                }
+                
             }
         }
 
@@ -146,6 +183,19 @@ public class PlatformerPlayerController : MonoBehaviour
             reward = other.GetComponent<Reward>();
             reward.regwardDestory();
         }
+
+        if(other.CompareTag("LowWall")){
+            gameManager.CheckingLowWall();
+        }
+
+        if (other.CompareTag("Portal")){
+            gameManager.ChangeLevel();
+        }
+
+        if (other.CompareTag("Key")){
+            gameManager.ChangeLevel();
+        }
     }
+    
 
 }
