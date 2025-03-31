@@ -14,5 +14,5 @@ In this platform, I make the mechanism.
 In this platform-final, before 
 
 
-
+[Platform-final Play](https://erigolee.github.io/game-dev-spring2025/builds/platformer-final/)
 
