@@ -8,16 +8,16 @@ In this platform, I created the following mechanism.
 
 1. I implemented an arrow key mechanism.
 
-For example, the object moves forward when the player presses the 'W' key or the '⭡' button. It moves backward when the player presses the 'S' key or the '⭣' button. The object moves left when the player presses the 'A' key or the '⭠' button and right when the player presses the 'D' key or the '⭢' button.
+   For example, the object moves forward when the player presses the 'W' key or the '⭡' button. It moves backward when the player presses the 'S' key or the '⭣' button. The object moves left when the player presses the 'A' key or the '⭠' button and right when the player presses the 'D' key or the '⭢' button.
 
-3. I made a double jump mechanism. When the player presses the button twice, the object performs a double jump.
+2. I made a double jump mechanism. When the player presses the button twice, the object performs a double jump.
 
 4. I made a mechanism to shoot bullets. When the player presses the 'X' key, a bullet is generated. However, it does not have any velocity, so it falls down.
 
 [Platform-1 Play](https://erigolee.github.io/game-dev-spring2025/builds/platformer-1/)
 
 ## Platform-final
-![image]("https://github.com/user-attachments/assets/a8c9de6f-b55f-47f3-a7ba-940e0187d333")
+![image](https://github.com/user-attachments/assets/a8c9de6f-b55f-47f3-a7ba-940e0187d333)
 
 
 In this platform-final, I created the following mechanisms:"
