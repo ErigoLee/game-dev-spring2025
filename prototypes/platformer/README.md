@@ -19,8 +19,7 @@ In this platform, I created the following mechanism.
 ## Platform-final
 ![image](https://github.com/user-attachments/assets/a8c9de6f-b55f-47f3-a7ba-940e0187d333)
 
-
-In this platform-final, I created the following mechanisms:"
+In this platform-final, I created the following mechanisms:
 
 1. I revised the bullet's velocity. When the player presses the 'X' key, a bullet is generated and gains increased speed.
 
@@ -29,6 +28,9 @@ In this platform-final, I created the following mechanisms:"
 3. In the play scene, the player has a limited number of bullets. However, when the player kills an enemy, a coin is generated. After that, the player gains 10 bullets.
 
 4. After the player kills all enemies in the play scene, a key is generated, and the game ends.
+
+5. When the player falls in the play scene, their health decreases by 10 each time. If health reaches 0, the game is over, and the game-over panel appears. When the player clicks the button, they are taken to the start scene.
+
 
 [Platform-final Play](https://erigolee.github.io/game-dev-spring2025/builds/platformer-final/)
 
