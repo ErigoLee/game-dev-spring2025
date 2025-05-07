@@ -12,6 +12,8 @@ TagManager:
   - Portal
   - GM
   - Key
+  - Player_box
+  - SM
   layers:
   - Default
   - TransparentFX

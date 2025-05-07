@@ -2,28 +2,43 @@ using UnityEngine;
 
 public class PlatformerPlayerController : MonoBehaviour
 {
+    //Camera
     [SerializeField]
     GameObject cam;
+    [SerializeField] private Transform camPivot; // camera pivot
+    [SerializeField] private float mouseSensitivity = 5f;
+    [SerializeField] private float pitchMin = -30f;
+    [SerializeField] private float pitchMax = 60f;
+    
+    [SerializeField] private float zoomDistance = 5f;           // Zoom distance
+    [SerializeField] private float zoomMin = 2f, zoomMax = 10f; // Zoom limits
+    [SerializeField] private float zoomSpeed = 2f;              // Zoom speed
+
+    //Animator
+    [SerializeField] private Animator animator;
+
+    //Character
     CharacterController cc;
     Vector3 velocity = Vector3.zero;
     float yVelocity = 0;
     float moveSpeed = 12;
-    float jumpForce = 8;  // Increased jump force for better jump height
+    float jumpForce = 10;  // Increased jump force for better jump height
     float gravity = -19.81f;
-
+    
+    private float pitch = 0f;
     bool doublejump = false;
     
     [SerializeField]
     private GameManager gameManager;
     private Reward reward;
 
-    private float maxRightAngle = 40.0f;
-    private float maxLeftAngle = -40.0f;
-    private float rotSpeed = 0.0f;
+    //private float maxRightAngle = 20.0f;
+    //private float maxLeftAngle = -20.0f;
+    //private float rotSpeed = 0.0f;
 
     [SerializeField]
     private GameObject bullet;
-    private bool bulletTimer;
+    private bool bulletTimer = false;
     private float shootTime = 1.0f;
     private float timer = 0.0f;
     [SerializeField]
@@ -32,6 +47,10 @@ public class PlatformerPlayerController : MonoBehaviour
 
     //level2 
     private int bullets;
+
+    //soundManager
+    [SerializeField] private SoundManager soundManager;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,8 +65,8 @@ public class PlatformerPlayerController : MonoBehaviour
     void Update()
     {
         // Get player input for movement
-        float hAxis = Input.GetAxis("Horizontal");
-        float vAxis = Input.GetAxis("Vertical");
+        float hAxis = Input.GetAxisRaw("Horizontal");
+        float vAxis = Input.GetAxisRaw("Vertical");
 
         // Reset velocity, note we are using a separate float for the yVelocity that 
         // IS NOT reset, and in fact is added to this velocity vector's y value every
@@ -66,6 +85,31 @@ public class PlatformerPlayerController : MonoBehaviour
         adjustedCamForward.Normalize();
         velocity += adjustedCamForward * vAxis * moveSpeed;
 
+        // Animator: Walk 
+        bool isMoving = hAxis != 0 || vAxis != 0;
+        animator.SetBool("walk", isMoving);
+       
+
+        if(Input.GetMouseButton(1))
+        {
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+            transform.Rotate(0,mouseX * mouseSensitivity, 0);
+
+            pitch -= mouseY * mouseSensitivity;
+            pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
+            camPivot.localEulerAngles = new Vector3(pitch, 0, 0);
+        }
+
+        // Zoom in/out with mouse scroll wheel
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0f)
+        {
+            zoomDistance -= scroll * zoomSpeed;
+            zoomDistance = Mathf.Clamp(zoomDistance, zoomMin, zoomMax);
+        }
+
+        /*
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
             rotSpeed = maxLeftAngle;
         }
@@ -76,8 +120,9 @@ public class PlatformerPlayerController : MonoBehaviour
             rotSpeed = 0.0f;
         }
         
+        
         transform.Rotate(0,rotSpeed * Time.deltaTime,0);
-
+        */
         // Gravity and Jumping
         if (cc.isGrounded)
         {
@@ -90,6 +135,9 @@ public class PlatformerPlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 yVelocity = jumpForce; // Apply jump force
+                if(soundManager!=null){
+                    soundManager.JumpEffect();
+                }
             }
             doublejump = false;
         }
@@ -152,6 +200,11 @@ public class PlatformerPlayerController : MonoBehaviour
         else{
             if (Input.GetKey(KeyCode.X))
             {
+                animator.SetBool("attack", true); // Start attack animation
+                if(soundManager!=null){
+                    soundManager.ShootBulletEffect();
+                }
+                
                 if(level == 0 || level == 2){
                     bullets = gameManager.GettingBullets();
                     if(bullets > 0){
@@ -168,18 +221,24 @@ public class PlatformerPlayerController : MonoBehaviour
                 }
                 
             }
+            else{
+                animator.SetBool("attack", false); // Reset attack animation
+            }
         }
 
-
-        
-
-
+        // Update camera position and rotation
+        camPivot.position = transform.position + new Vector3(0, 1.5f, 0);
+        cam.transform.position = camPivot.position - camPivot.forward * zoomDistance + camPivot.up * 1f;
+        cam.transform.LookAt(camPivot);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Reward")){
             gameManager.gettingPoint();
+            if(soundManager!=null){
+                soundManager.RewardEffect();
+            }
             reward = other.GetComponent<Reward>();
             reward.regwardDestory();
         }

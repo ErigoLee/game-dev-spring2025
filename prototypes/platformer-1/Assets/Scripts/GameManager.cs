@@ -30,7 +30,10 @@ public class GameManager : MonoBehaviour
     //Tutorial - level 1
     [SerializeField] private GameObject tutorialObj;
     [SerializeField] private GameObject lowWall;
-    
+
+    //Tutorial - level 1 NPC
+    [SerializeField] private GameObject NPCLevel1;
+    private bool NPC1talkingEnd;
     private bool checkingWall;
     //Targets
     [SerializeField] private GameObject targets;
@@ -70,6 +73,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Button gotoBeginBut;
     private GameObject acutal_enemyObj2;
+    private bool NPC2talkingEnd;
+    [SerializeField] private GameObject  NPCLevel2;
+    //DialogueManager
+    [SerializeField] private DialogueManager2 dialogueManager;
 
     //Timer
     private float eslapedTime;
@@ -77,7 +84,10 @@ public class GameManager : MonoBehaviour
     private bool acceptedTime;
 
     private TMP_Text text;
-    
+
+    //sound Manager
+    [SerializeField] private SoundManager soundManager;
+   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -114,7 +124,8 @@ public class GameManager : MonoBehaviour
         //coin
         point_level1_num = 0;
         point_level1_num_max = 7;
-
+        //dialogue
+        NPC1talkingEnd = true;
 
         //level2
         initPos = new Vector3(-43.2f, 6f, -43.5f);
@@ -124,6 +135,8 @@ public class GameManager : MonoBehaviour
         enemies_level2_alldie = false;
         coins = new List<GameObject>();
         gotoBeginBut.onClick.AddListener(onButtonClickBegin);
+        NPC2talkingEnd = false;
+        
     }
 
     // Update is called once per frame
@@ -132,13 +145,15 @@ public class GameManager : MonoBehaviour
         switch (level){
             case 1:
                 if(Input.GetKeyDown(KeyCode.T)){
-                    if(!checkingWall && target_num_reached && enemies_level1_reached){
+                    if(!checkingWall && target_num_reached && enemies_level1_reached && NPC1talkingEnd){
                         ChangeLevel1();
                         level1++;
                     }
                 }
             break;
             case 2:
+                if(NPC2talkingEnd)
+                   platformerPlayerController.enabled= true;
                 if(enemies_level2_alldie)
                     keyObj2.SetActive(true);
             break;
@@ -170,22 +185,47 @@ public class GameManager : MonoBehaviour
                         text.text = "You can go right \nif you press the 'D' key \nor the right arrow key.";
                     break;
                     case 6:
+                        text.text = "You can rotate the view \nif you right-click.";
+                    break;
+                    case 7:
+                        text.text = "You can zoom in and out \nif you scroll the mouse wheel.";
+                    break;
+                    case 8:
+                        CharacterController controller = player.GetComponent<CharacterController>();
+                        if (controller != null)
+                        {
+                            controller.enabled = false; 
+                            controller.transform.position = new Vector3(0f, 0f, -20f); 
+                            controller.transform.rotation = Quaternion.Euler(0f, 0f, 0f); 
+                            controller.enabled = true; 
+                        }
+                        else
+                        {
+                            Debug.LogError("There is no CharacterController");
+                        }
+                        NPCLevel1.SetActive(true);
+                        platformerPlayerController.enabled= false;
+                        NPC1talkingEnd = false;
+                        dialogueManager.TalkingNPCLevel1();
+                        text.text = "Click the NPC to start a conversation. \nPress the D key to proceed to the next dialogue.";
+                    break;
+                    case 9:
                         lowWall.SetActive(true);
                         text.text = "You can climb the wall \nif you press the spacebar twice.";
                         checkingWall = true;
                     break;
-                    case 7:
+                    case 10:
                         targets_instance = Instantiate(targets, new Vector3(-10f,0f,-30f), Quaternion.Euler(0f,-90f,0f));
                         text.text = "You can shoot the target \nif you press the 'X' key";
                         target_num_reached = false;
                     break;
-                    case 8:
+                    case 11:
                         Destroy(targets_instance);
                         enemies_level1_instance = Instantiate(enemies_level1,new Vector3(0f,0f,0f),Quaternion.Euler(0f,0,0f));
                         enemies_level1_reached = false;
                         text.text = "You can get coin \nafter you kill the enemies.";
                     break;
-                    case 9:
+                    case 12:
                         Destroy(enemies_level1_instance);
                         text.text = "You can end the section! \n Let's go to the next section!";
                         portal.SetActive(true);
@@ -199,6 +239,7 @@ public class GameManager : MonoBehaviour
 
 
     public void ChangeLevel(){
+        soundManager.StartBG();
         switch (level){
             case 1:
                 portal.SetActive(false);
@@ -229,6 +270,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 coins.Clear();
+                NPC2talkingEnd = false;
                 Destroy(acutal_enemyObj2);
             break;
         }
@@ -274,6 +316,8 @@ public class GameManager : MonoBehaviour
         
     }
 
+    
+
     public void gettingTarget(){
         if(level == 1){
             targetPoint = targetPoint + 1;
@@ -296,6 +340,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void EndDialogue(){
+        switch(level){
+            case 1:
+                platformerPlayerController.enabled= true;
+                NPC1talkingEnd = true;
+                NPCLevel1.SetActive(false);
+            break;
+            case 2:
+                platformerPlayerController.enabled= true;
+                NPC2talkingEnd = true;
+                NPCLevel2.SetActive(false);
+            break;
+        }
+    }
     public void CheckingLowWall(){
         checkingWall = false;
         CharacterController controller = player.GetComponent<CharacterController>();
@@ -330,6 +388,7 @@ public class GameManager : MonoBehaviour
     //level1
     void OnButtonClickTuto(){
         level = 1;
+        soundManager.TutoBG();
         platformerPlayerController.enabled= true;
         tutorialObj.SetActive(true);
         begin.SetActive(false);
@@ -351,6 +410,7 @@ public class GameManager : MonoBehaviour
 
     void OnButtonClickPlay(){
         level = 2;
+        soundManager.PlayerBG();
         platformerPlayerController.enabled = true;      
         begin.SetActive(false);
         playObj.SetActive(true);
@@ -367,6 +427,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("There is no CharacterController");
         }
+
+        //NPC
+        NPCLevel2.SetActive(true);
+        platformerPlayerController.enabled= false;
+        dialogueManager.TalkingNPCLevel2();
     }
 
     void onButtonClickBegin(){
@@ -385,6 +450,8 @@ public class GameManager : MonoBehaviour
             health = health - 10;
             if(health <= 0){
                 gameOverPanel.SetActive(true);
+                soundManager.DeadBG();
+
             }
             else{
                 CharacterController controller = player.GetComponent<CharacterController>();
@@ -403,6 +470,15 @@ public class GameManager : MonoBehaviour
 
 
             
+        }
+    }
+
+    public void ReducingPlayerHP(){
+        if(level ==2){
+            health = health - 10;
+            if(health <= 0){
+                gameOverPanel.SetActive(true);
+            }
         }
     }
 
