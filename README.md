@@ -28,10 +28,10 @@ Level 3 reuses the basic structure of Level 2, but adds a control feature: press
 - A debounce interval (timeBetweenInputs) was introduced to prevent rapid repeats and ensure accurate level selection.
 
 6. Code </br>
-	(1) GameManager.cs </br>
- 		- The following function is part of the **GameManager** code.  </br>
- 		- It implements **page navigation** using the Up and Down arrow keys.  </br>
- 		- To prevent continuous key inputs from being registered too quickly, an input delay is applied with the variable `timeBetweenInputs`. </br>
+(1) GameManager.cs </br>
+- The following function is part of the **GameManager** code.  </br>
+- It implements **page navigation** using the Up and Down arrow keys.  </br>
+- To prevent continuous key inputs from being registered too quickly, an input delay is applied with the variable `timeBetweenInputs`. </br>
 ```csharp
 void pageUpDown() {
     if (checkingTime == false) {
