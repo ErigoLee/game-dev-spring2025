@@ -301,7 +301,7 @@ private void CheckDistance(Transform target, string targetName, int idx)
 
 **Start Menu**
 - At launch, you can choose between **Tutorial** and **Game** scenes.</br>
-- Selection is done via **mouse click**.
+- Selection is done via **mouse click**.</br>
 <img src="https://github.com/user-attachments/assets/43ea3b31-09ac-422e-9c9d-1713986e35be" alt="game screenshot" width="500" height="372"/></br>
 
 
