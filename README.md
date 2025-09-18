@@ -311,8 +311,8 @@ private void CheckDistance(Transform target, string targetName, int idx)
 
 
 **Game Scene**
-- Defeat all **enemies** to obtain a **key**.
-- Once the key is obtained, the **game ends automatically**. 
+- Defeat all **enemies** to obtain a **key**.</br>
+- Once the key is obtained, the **game ends automatically**. </br>
 <img src="https://github.com/user-attachments/assets/e6fd8a7c-54b5-47a8-a034-f0d295fdd65a" alt="game screenshot" width="500" height="372"/></br>
 
 4. Code </br>
