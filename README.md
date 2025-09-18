@@ -305,20 +305,20 @@ private void CheckDistance(Transform target, string targetName, int idx)
 
 3. In-Game screens
 ### Start Menu
-- At launch, you can choose between **Tutorial** and **Game** scenes.
+- At launch, you can choose between **Tutorial** and **Game** scenes.</br>
 - Selection is done via **mouse click**.
-<img src="https://github.com/user-attachments/assets/43ea3b31-09ac-422e-9c9d-1713986e35be" alt="game screenshot" width="500"/></br>
+<img src="https://github.com/user-attachments/assets/43ea3b31-09ac-422e-9c9d-1713986e35be" alt="game screenshot" width="500" height="372"/></br>
 
 
 ### Tutorial Scene
-- Learn the **basic controls and interactions** required to play.
-<img src="https://github.com/user-attachments/assets/c37d5615-e1c7-456a-babe-097e59122c85" alt="game screenshot" width="500"/></br>
+- Learn the **basic controls and interactions** required to play. </br>
+<img src="https://github.com/user-attachments/assets/c37d5615-e1c7-456a-babe-097e59122c85" alt="game screenshot" width="500" height="372"/></br>
 
 
 ### Game Scene
 - Defeat all **enemies** to obtain a **key**.
 - Once the key is obtained, the **game ends automatically**. 
-<img src="https://github.com/user-attachments/assets/e6fd8a7c-54b5-47a8-a034-f0d295fdd65a" alt="game screenshot" width="500"/></br>
+<img src="https://github.com/user-attachments/assets/e6fd8a7c-54b5-47a8-a034-f0d295fdd65a" alt="game screenshot" width="500" height="372"/></br>
 
 4. Code </br>
 (1) PlatformerPlayerController.cs
@@ -353,18 +353,15 @@ if (scroll != 0f)
 
 ```
 - Character Movement
- - **Jump & Double Jump:**  
-  - Press **Spacebar** to jump (`yVelocity = jumpForce`).  
-  - A **double jump** is available: pressing **Spacebar** again while in the air applies another jump force once.
+	- **Jump & Double Jump:**  
+		- Press **Spacebar** to jump (`yVelocity = jumpForce`).  
+		- A **double jump** is available: pressing **Spacebar** again while in the air applies another jump force once.
 
- - **Speed Limiting:**  
-  - The character’s movement velocity is limited using  
-    `velocity = Vector3.ClampMagnitude(velocity, 10);`  
-    This ensures the maximum speed does not exceed **10**.
+	- **Speed Limiting:**  
+		- The character’s movement velocity is limited using `velocity = Vector3.ClampMagnitude(velocity, 10);` This ensures the maximum speed does not exceed **10**.
 
- - **Character Movement:**  
-  - The final velocity is applied to the character controller with  
-    `cc.Move(velocity * Time.deltaTime);`.
+	- **Character Movement:**  
+		- The final velocity is applied to the character controller with `cc.Move(velocity * Time.deltaTime);`.
 
 ```csharp
 if (Input.GetKeyDown(KeyCode.Space))
@@ -391,7 +388,7 @@ cc.Move(velocity * Time.deltaTime);
 - **Why local strings?** The professor’s `ADialogueSystem.unitypackage` server is closed, so Google-Sheet–based retrieval is unavailable.  
   Instead, all dialogue lines are stored locally in a string array (e.g., `line2[]`).
 
-### How it works
+**How it works** </br>
 - Press **`D`** to advance the conversation.
 
 ```csharp
@@ -426,7 +423,7 @@ public void TalkingNPCLevel2Continue(){
 ```
 
 (3) EnemyAI.cs
-### FSM State Implementation
+**FSM State Implementation**
 - This project includes an FSM (Finite State Machine) system implemented based on what I learned during the **Game Programming II** course in my undergraduate studies.  
 - The FSM framework was applied to manage enemy behaviors such as **patrolling**, **chasing**, and **attacking**, ensuring clear state transitions and maintainable gameplay logic.
 	- Example)
