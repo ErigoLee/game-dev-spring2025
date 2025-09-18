@@ -4,7 +4,7 @@ These are the projects I created during the Game Development I graduate course.
 
 ## Introduction of Projects
 ### (1) Breakout game
-<img src="https://github.com/user-attachments/assets/933c9d59-90ca-48d0-a374-f9e30923641b" alt="image" width="600" height="372"/>
+<img src="https://github.com/user-attachments/assets/933c9d59-90ca-48d0-a374-f9e30923641b" alt="image" width="600" height="372"/> </br>
 1. Description
 This project is a custom game based on the classic **Breakout** concept.  
 Players control a paddle using the arrow keys to bounce a ball and break walls.
@@ -113,7 +113,65 @@ void OnCollisionEnter(Collision collision)
 
 
 ### (2) Simulator game
+<img src="https://github.com/user-attachments/assets/5f6e90cd-896c-4a3a-be74-5da2d0637e4b" alt="game screenshot" width="600" height="372"/>
+1. Description
+**Grid and Cell System**</br>
+- When the game starts, the `GridManager4.cs` script generates a grid of **20 × 20 cells** (total **400 cells**) without overlap.  
+- Each cell is randomly assigned one of the following attributes: **Water**, **Fire**, **Grass**, or **Road**.  
+- After the grid is created, clicking on any cell with the mouse displays the cell’s information in the corresponding panel UI image.
 
+2. Code
+(1) GridManager4.cs
+- The nested loops place each cell at `(x * cellSpacing, 0, y * cellSpacing)`, creating a uniform **gridSize × gridSize** layout with consistent spacing in both X (columns) and Z (rows) directions.
+- On instantiation, each cell receives one of four materials — **Water**, **Fire**, **Grass**, **Road** — chosen **uniformly at random (25% each)** so that every playthrough yields a different grid composition.
+- The cell’s **type** is determined by its material (e.g., Water, Fire, Grass, Road).
+```csharp
+for (int x = 0; x < gridSize; x++)
+{
+    for (int y = 0; y < gridSize; y++)
+    {
+        Vector3 position = new Vector3(x * cellSpacing, 0, y * cellSpacing);
+        GameObject cell = Instantiate(cellPrefab, position, Quaternion.identity, transform);
+
+        Cell cellScript = cell.AddComponent<Cell>();
+        cellScript.SetTypeMaterials(waterMaterial, fireMaterial, grassMaterial, roadMaterial);
+
+        // Apply either water or fire material randomly (for testing purposes)
+        Material chosenMat = Random.value > 0.75f ? waterMaterial : Random.value > 0.5f ? fireMaterial :  Random.value > 0.25f ? grassMaterial : roadMaterial;
+        cellScript.SetMaterial(chosenMat);
+
+        cell.name = "Cell_" + x + "_" + y;
+        cells[x, y] = cellScript;
+    }
+}
+```
+- When the player clicks with the mouse, a **raycast** is used to detect which cell was clicked.
+- When the player clicks on a cell, the hit point is converted into grid coordinates (x, y).
+- If the coordinates are valid, the corresponding **Cell** object is retrieved.
+- The **panel text** is updated **only when a cell is clicked**, showing contextual information about that cell.
+Example: - Clicking a **Water** cell displays:</br>
+**“A calm and stable environment. Reduces fire risk and slows unit movement.”**
+
+```csharp
+if (Physics.Raycast(ray, out hit))
+{
+    Vector3 hitPoint = hit.point;
+    Vector2Int gridCoord = new Vector2Int(Mathf.RoundToInt(hitPoint.x / cellSpacing), Mathf.RoundToInt(hitPoint.z / cellSpacing));
+
+    if (gridCoord.x >= 0 && gridCoord.x < gridSize && gridCoord.y >= 0 && gridCoord.y < gridSize)
+    {
+        Cell clickedCell = cells[gridCoord.x, gridCoord.y];
+
+        string type = clickedCell.GetCellTypeByMaterial();
+        Debug.Log($"Clicked Cell Type: {type}");
+        string explainStr = "";
+        if(type == "Water")
+        {
+            explainStr = "A calm and stable environment. \nReduces fire risk and slows unit movement.";
+        }
+    }
+}
+```
 ### (3) People-1 game
 
 ### (4) platformer game
