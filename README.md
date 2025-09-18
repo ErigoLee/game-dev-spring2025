@@ -303,24 +303,25 @@ private void CheckDistance(Transform target, string targetName, int idx)
 - **Monster AI:** Using an **FSM (Finite State Machine)**, enemies can **shoot**, **chase**, or **patrol** the player.
 - **NPC Dialogue:** A **dialogue system** allows the player to **interact with NPCs**.
 
-3. In-Game screens
-### Start Menu
+3. In-Game screens</br>
+**Start Menu**
 - At launch, you can choose between **Tutorial** and **Game** scenes.</br>
 - Selection is done via **mouse click**.
 <img src="https://github.com/user-attachments/assets/43ea3b31-09ac-422e-9c9d-1713986e35be" alt="game screenshot" width="500" height="372"/></br>
 
 
-### Tutorial Scene
+**Tutorial Scene**
 - Learn the **basic controls and interactions** required to play. </br>
 <img src="https://github.com/user-attachments/assets/c37d5615-e1c7-456a-babe-097e59122c85" alt="game screenshot" width="500" height="372"/></br>
 
 
-### Game Scene
+**Game Scene**
 - Defeat all **enemies** to obtain a **key**.
 - Once the key is obtained, the **game ends automatically**. 
 <img src="https://github.com/user-attachments/assets/e6fd8a7c-54b5-47a8-a034-f0d295fdd65a" alt="game screenshot" width="500" height="372"/></br>
 
 4. Code </br>
+
 (1) PlatformerPlayerController.cs
 - Camera Controls
   - **Right Mouse Button (Hold):** When the right mouse button is held down, moving the mouse allows the camera to rotate:
@@ -422,7 +423,7 @@ public void TalkingNPCLevel2Continue(){
 }
 ```
 
-(3) EnemyAI.cs
+(3) EnemyAI.cs </br>
 **FSM State Implementation**
 - This project includes an FSM (Finite State Machine) system implemented based on what I learned during the **Game Programming II** course in my undergraduate studies.  
 - The FSM framework was applied to manage enemy behaviors such as **patrolling**, **chasing**, and **attacking**, ensuring clear state transitions and maintainable gameplay logic.
