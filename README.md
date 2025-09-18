@@ -111,7 +111,7 @@ void OnCollisionEnter(Collision collision)
 }
 ```
 
-7. Play Link
+7. Game Link
 
 
 ### (2) Simulator game
@@ -174,6 +174,8 @@ if (Physics.Raycast(ray, out hit))
     }
 }
 ```
+3. Game Link
+
 ### (3) People-1 game
 <img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>
 
@@ -286,9 +288,191 @@ private void CheckDistance(Transform target, string targetName, int idx)
 }
 ```
 
+3. Game Link
 
-### (4) platformer game
 
+### (4) platformer game - Whispering Locks
+1. Platformer Game Overview</br>
+- This project is a **platformer-style** game where the player advances by moving a character through the stage.
+
+2. Core Mechanics
+- **Movement:** Use **WASD** to move the player character.
+- **Jumping:** Press **Spacebar** to jump. **Double jump** is available.
+- **Combat:** Press **X** to shoot bullets and defeat monsters.
+- **Key Collection:** After **defeating all monsters**, collect the **key** to finish the level.
+- **Monster AI:** Using an **FSM (Finite State Machine)**, enemies can **shoot**, **chase**, or **patrol** the player.
+- **NPC Dialogue:** A **dialogue system** allows the player to **interact with NPCs**.
+
+3. In-Game screens
+### Start Menu
+- At launch, you can choose between **Tutorial** and **Game** scenes.
+- Selection is done via **mouse click**.
+<img src="https://github.com/user-attachments/assets/43ea3b31-09ac-422e-9c9d-1713986e35be" alt="game screenshot" width="500"/></br>
+
+
+### Tutorial Scene
+- Learn the **basic controls and interactions** required to play.
+<img src="https://github.com/user-attachments/assets/c37d5615-e1c7-456a-babe-097e59122c85" alt="game screenshot" width="500"/></br>
+
+
+### Game Scene
+- Defeat all **enemies** to obtain a **key**.
+- Once the key is obtained, the **game ends automatically**. 
+<img src="https://github.com/user-attachments/assets/e6fd8a7c-54b5-47a8-a034-f0d295fdd65a" alt="game screenshot" width="500"/></br>
+
+4. Code </br>
+(1) PlatformerPlayerController.cs
+- Camera Controls
+  - **Right Mouse Button (Hold):** When the right mouse button is held down, moving the mouse allows the camera to rotate:
+  	- **Mouse X (Horizontal movement):** Rotates the camera left and right.
+  	- **Mouse Y (Vertical movement):** Rotates the camera up and down (clamped between `pitchMin` and `pitchMax`).
+  - **Mouse Scroll Wheel:** Scrolling adjusts the camera’s zoom distance:
+  	- **Scroll Up:** Zoom in
+  	- **Scroll Down:** Zoom out  
+  	(Zoom distance is clamped between `zoomMin` and `zoomMax`.)
+
+```csharp
+if(Input.GetMouseButton(1))
+{
+	float mouseX = Input.GetAxis("Mouse X");
+	float mouseY = Input.GetAxis("Mouse Y");
+	transform.Rotate(0,mouseX * mouseSensitivity, 0);
+
+	pitch -= mouseY * mouseSensitivity;
+	pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
+	camPivot.localEulerAngles = new Vector3(pitch, 0, 0);
+}
+
+// Zoom in/out with mouse scroll wheel
+float scroll = Input.GetAxis("Mouse ScrollWheel");
+if (scroll != 0f)
+{
+	zoomDistance -= scroll * zoomSpeed;
+	zoomDistance = Mathf.Clamp(zoomDistance, zoomMin, zoomMax);
+}
+
+```
+- Character Movement
+ - **Jump & Double Jump:**  
+  - Press **Spacebar** to jump (`yVelocity = jumpForce`).  
+  - A **double jump** is available: pressing **Spacebar** again while in the air applies another jump force once.
+
+ - **Speed Limiting:**  
+  - The character’s movement velocity is limited using  
+    `velocity = Vector3.ClampMagnitude(velocity, 10);`  
+    This ensures the maximum speed does not exceed **10**.
+
+ - **Character Movement:**  
+  - The final velocity is applied to the character controller with  
+    `cc.Move(velocity * Time.deltaTime);`.
+
+```csharp
+if (Input.GetKeyDown(KeyCode.Space))
+{
+	yVelocity = jumpForce; // Apply jump force
+                
+}
+doublejump = false;
+.....
+if (Input.GetKeyDown(KeyCode.Space) && !(doublejump)){
+	doublejump = true;
+	yVelocity = jumpForce; // Apply jump force
+}
+
+// Limit movement speed
+velocity = Vector3.ClampMagnitude(velocity, 10);
+
+// Move the character
+cc.Move(velocity * Time.deltaTime);
+```
+
+(2) DialogueManager.cs</br>
+- **Origin:** The dialogue structure is adapted from the *People-1* project.
+- **Why local strings?** The professor’s `ADialogueSystem.unitypackage` server is closed, so Google-Sheet–based retrieval is unavailable.  
+  Instead, all dialogue lines are stored locally in a string array (e.g., `line2[]`).
+
+### How it works
+- Press **`D`** to advance the conversation.
+
+```csharp
+public void TalkingNPCLevel2Continue(){
+
+	if(Input.GetKeyDown(KeyCode.D)){
+		if(countingTalkNPC2>=maxCountingTalkNPC2){
+			TalkingNPCLevel2End();
+		}
+		else{
+			//string line = DialogueManager.scc.getSCCLine("NPC2");
+				
+			if(countingTalkNPC2 % 2 ==0){
+				textObj.SetActive(true);
+				left.SetActive(true);
+				right.SetActive(false);
+				Debug.Log("NPC says: " + line2[countingTalkNPC2]);
+				dialogueText.text = line2[countingTalkNPC2];
+				countingTalkNPC2++;
+			}
+			else{
+				textObj.SetActive(true);
+				left.SetActive(false);
+				right.SetActive(true);
+				Debug.Log("Character says: "+line2[countingTalkNPC2]);
+				dialogueText.text = line2[countingTalkNPC2];
+				countingTalkNPC2++;
+			}
+		}
+	}
+}
+```
+
+(3) EnemyAI.cs
+### FSM State Implementation
+- This project includes an FSM (Finite State Machine) system implemented based on what I learned during the **Game Programming II** course in my undergraduate studies.  
+- The FSM framework was applied to manage enemy behaviors such as **patrolling**, **chasing**, and **attacking**, ensuring clear state transitions and maintainable gameplay logic.
+	- Example)
+ 		- The enemy’s FSM state changes **based on the distance to the player**.
+		- **Patrol State:** When the player is **not detected** (distance is greater than `detectRange`), the enemy remains in `Patrol` and **moves toward `patrolTarget`**.
+		- **Chase Transition:** If the player comes within `detectRange`, the state switches from `Patrol` to **`Chase`**.
+
+```csharp
+public enum State { Patrol, Chase, Attack, Dead }
+.....
+case State.Patrol:
+	Patrol();
+	if (distanceToPlayer <= detectRange)
+	{
+		currentState = State.Chase;
+	}
+break;
+.......
+void Patrol()
+{
+	animator.SetBool("Attack", false);
+	animator.SetBool("Walk", true);
+	MoveTo(patrolTarget);
+
+	if (Vector3.Distance(transform.position, patrolTarget) < 1.5f)
+	{
+            SetRandomPatrolTarget();
+	}
+}
+......
+void SetRandomPatrolTarget()
+{
+	float randX = Random.Range(xMin, xMax);
+	float randZ = Random.Range(zMin, zMax);
+	patrolTarget = new Vector3(randX, transform.position.y, randZ);
+}
+```
+
+6. Known Issues & Fixes
+- **Animation Transitions:** Transitions are not fully smooth. The switch from **Idle → Attack** can look unnatural. - **Character Rotation:** The character may rotate too abruptly during movement in some cases.
+- **Projectile Behavior:** Bullet trajectories can behave oddly when firing.
+- **Start Menu Input (Fixed):** Pressing a button on the start screen could trigger a different button.
+	- ✅ **Fixed:** The input handling on the start screen has been corrected.
+
+7. Game Link
+ 
 
 ## License
 - All **source code** in this repository is licensed under the [MIT License](./LICENSE).
