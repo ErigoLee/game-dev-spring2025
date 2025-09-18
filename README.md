@@ -5,9 +5,9 @@ These are the projects I created during the Game Development I graduate course.
 ## Introduction of Projects
 ### (1) Breakout game
 <img src="https://github.com/user-attachments/assets/933c9d59-90ca-48d0-a374-f9e30923641b" alt="image" width="600" height="372"/> </br>
-1. Description
-This project is a custom game based on the classic **Breakout** concept.  
-Players control a paddle using the arrow keys to bounce a ball and break walls.
+1. Description </br>
+- This project is a custom game based on the classic **Breakout** concept. </br>
+- Players control a paddle using the arrow keys to bounce a ball and break walls. </br>
 
 2. Gameplay Rules
 - Players have **5 lives**. If the ball falls 5 times, the game is over.
@@ -27,8 +27,8 @@ Level 3 reuses the basic structure of Level 2, but adds a control feature: press
 - Arrow keys were being registered as continuous inputs on the selection screen, which sometimes prevented choosing the intended level.
 - A debounce interval (timeBetweenInputs) was introduced to prevent rapid repeats and ensure accurate level selection.
 
-6. Code
-(1) GameManager.cs
+6. Code </br>
+(1) GameManager.cs </br>
 The following function is part of the **GameManager** code.  </br>
 It implements **page navigation** using the Up and Down arrow keys.  </br>
 To prevent continuous key inputs from being registered too quickly, an input delay is applied with the variable `timeBetweenInputs`. </br>
@@ -60,7 +60,7 @@ void pageUpDown() {
     }
 }
 ```
-(2) BallScript.cs
+(2) BallScript.cs</br>
 When the ball collides with a brick, its velocity changes based on the brick’s color.
 
 - **Red** → `(-10, 20, 0)`
@@ -114,14 +114,13 @@ void OnCollisionEnter(Collision collision)
 
 ### (2) Simulator game
 <img src="https://github.com/user-attachments/assets/5f6e90cd-896c-4a3a-be74-5da2d0637e4b" alt="game screenshot" width="600" height="372"/></br>
-1. Description</br>
-**Grid and Cell System**</br>
+1. Description - **Grid and Cell System** </br>
 - When the game starts, the `GridManager4.cs` script generates a grid of **20 × 20 cells** (total **400 cells**) without overlap.  
 - Each cell is randomly assigned one of the following attributes: **Water**, **Fire**, **Grass**, or **Road**.  
 - After the grid is created, clicking on any cell with the mouse displays the cell’s information in the corresponding panel UI image.
 
-2. Code
-(1) GridManager4.cs
+2. Code</br>
+(1) GridManager4.cs</br>
 - The nested loops place each cell at `(x * cellSpacing, 0, y * cellSpacing)`, creating a uniform **gridSize × gridSize** layout with consistent spacing in both X (columns) and Z (rows) directions.
 - On instantiation, each cell receives one of four materials — **Water**, **Fire**, **Grass**, **Road** — chosen **uniformly at random (25% each)** so that every playthrough yields a different grid composition.
 - The cell’s **type** is determined by its material (e.g., Water, Fire, Grass, Road).
@@ -173,17 +172,17 @@ if (Physics.Raycast(ray, out hit))
 }
 ```
 ### (3) People-1 game
-<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>/>
+<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>
 
 1. Description</br>
 This project was built using the **ADialogueSystem.unitypackage** provided by the professor.  
 All dialogue content was organized and stored in a **Google Sheet**:  
 [Dialogue Google Sheet](https://docs.google.com/spreadsheets/d/1bxKhDvQU6dbHUVp_ThVrsOxNvDnRGg2cLrLTWeg6TVs/edit?gid=0#gid=0)  
 
-However, since the professor’s server has been shut down, the dialogue system can no longer be executed in its current form.  
-As a result, the project demonstrates the dialogue structure and data setup, but the live dialogue progression is unavailable.
+However, since the professor’s server has been shut down, the dialogue system can no longer be executed in its current form.  </br>
+As a result, the project demonstrates the dialogue structure and data setup, but the live dialogue progression is unavailable. </br>
 
-2. Code
+2. Code </br>
 (1) Dialogue Manager.cs </br>
 - The following code connects and retrieves the dialogue content from the Google Sheet.</br>
 ```csharp
@@ -198,7 +197,7 @@ if (useGoogleSheet) {
 }
 ```
 
-### Description of the Doctor dialogue within multiple dialogues
+**Description of the Doctor dialogue within multiple dialogues**
 - Press **`D`** to advance the conversation with the Doctor.
 - Stops automatically when `countingTalkD` reaches `maxCountingTalkD` (`TalkingDoctorEnd()`).
 - On the first line (`countingTalkD == 0`), runs `SettingDefault()` to init UI.
