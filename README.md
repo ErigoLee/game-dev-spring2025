@@ -29,10 +29,10 @@ Level 3 reuses the basic structure of Level 2, but adds a control feature: press
 
 6. Code
 
-(1) GameManager.cs </br>
-The following function is part of the **GameManager** code.  </br>
-It implements **page navigation** using the Up and Down arrow keys.  </br>
-To prevent continuous key inputs from being registered too quickly, an input delay is applied with the variable `timeBetweenInputs`. </br>
+ (1) GameManager.cs </br>
+ The following function is part of the **GameManager** code.  </br>
+ It implements **page navigation** using the Up and Down arrow keys.  </br>
+ To prevent continuous key inputs from being registered too quickly, an input delay is applied with the variable `timeBetweenInputs`. </br>
 ```csharp
 void pageUpDown() {
     if (checkingTime == false) {
@@ -61,8 +61,8 @@ void pageUpDown() {
     }
 }
 ```
-(2) BallScript.cs</br>
-When the ball collides with a brick, its velocity changes based on the brick’s color.
+ (2) BallScript.cs</br>
+ When the ball collides with a brick, its velocity changes based on the brick’s color.
 
 - **Red** → `(-10, 20, 0)`
 - **Orange** → `(9, -18, 0)`
@@ -122,10 +122,10 @@ void OnCollisionEnter(Collision collision)
 
 2. Code
 
-(1) GridManager4.cs</br>
-- The nested loops place each cell at `(x * cellSpacing, 0, y * cellSpacing)`, creating a uniform **gridSize × gridSize** layout with consistent spacing in both X (columns) and Z (rows) directions.
-- On instantiation, each cell receives one of four materials — **Water**, **Fire**, **Grass**, **Road** — chosen **uniformly at random (25% each)** so that every playthrough yields a different grid composition.
-- The cell’s **type** is determined by its material (e.g., Water, Fire, Grass, Road).
+ (1) GridManager4.cs</br>
+  - The nested loops place each cell at `(x * cellSpacing, 0, y * cellSpacing)`, creating a uniform **gridSize × gridSize** layout with consistent spacing in both X (columns) and Z (rows) directions.
+  - On instantiation, each cell receives one of four materials — **Water**, **Fire**, **Grass**, **Road** — chosen **uniformly at random (25% each)** so that every playthrough yields a different grid composition.
+  - The cell’s **type** is determined by its material (e.g., Water, Fire, Grass, Road).
 ```csharp
 for (int x = 0; x < gridSize; x++)
 {
@@ -146,12 +146,12 @@ for (int x = 0; x < gridSize; x++)
     }
 }
 ```
-- When the player clicks with the mouse, a **raycast** is used to detect which cell was clicked.
-- When the player clicks on a cell, the hit point is converted into grid coordinates (x, y).
-- If the coordinates are valid, the corresponding **Cell** object is retrieved.
-- The **panel text** is updated **only when a cell is clicked**, showing contextual information about that cell.</br>
-Example: - Clicking a **Water** cell displays:</br>
-**“A calm and stable environment. Reduces fire risk and slows unit movement.”**
+  - When the player clicks with the mouse, a **raycast** is used to detect which cell was clicked.
+  - When the player clicks on a cell, the hit point is converted into grid coordinates (x, y).
+  - If the coordinates are valid, the corresponding **Cell** object is retrieved.
+  - The **panel text** is updated **only when a cell is clicked**, showing contextual information about that cell.</br>
+    Example: - Clicking a **Water** cell displays:</br>
+    **“A calm and stable environment. Reduces fire risk and slows unit movement.”**
 
 ```csharp
 if (Physics.Raycast(ray, out hit))
@@ -174,19 +174,18 @@ if (Physics.Raycast(ray, out hit))
 }
 ```
 ### (3) People-1 game
-<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/>
+<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>
 
 1. Description</br>
-This project was built using the **ADialogueSystem.unitypackage** provided by the professor.  
-All dialogue content was organized and stored in a **Google Sheet**:  
+- This project was built using the **ADialogueSystem.unitypackage** provided by the professor.  
+- All dialogue content was organized and stored in a **Google Sheet**:  
 [Dialogue Google Sheet](https://docs.google.com/spreadsheets/d/1bxKhDvQU6dbHUVp_ThVrsOxNvDnRGg2cLrLTWeg6TVs/edit?gid=0#gid=0)  
-
-However, since the professor’s server has been shut down, the dialogue system can no longer be executed in its current form.  </br>
-As a result, the project demonstrates the dialogue structure and data setup, but the live dialogue progression is unavailable. </br>
+- However, since the professor’s server has been shut down, the dialogue system can no longer be executed in its current form.  
+- As a result, the project demonstrates the dialogue structure and data setup, but the live dialogue progression is unavailable.
 
 2. Code </br>
 (1) Dialogue Manager.cs </br>
-- The following code connects and retrieves the dialogue content from the Google Sheet.</br>
+  - The following code connects and retrieves the dialogue content from the Google Sheet.</br>
 ```csharp
 if (useGoogleSheet) {
     // This will start the asyncronous calls to Google Sheets, and eventually
@@ -199,15 +198,15 @@ if (useGoogleSheet) {
 }
 ```
 
-**Description of the Doctor dialogue within multiple dialogues**
-- Press **`D`** to advance the conversation with the Doctor.
-- Stops automatically when `countingTalkD` reaches `maxCountingTalkD` (`TalkingDoctorEnd()`).
-- On the first line (`countingTalkD == 0`), runs `SettingDefault()` to init UI.
-- Fetches the next line via `DialogueManager.scc.getSCCLine("C")`.
-- Alternates speakers each press:
-  - **Even `countingTalkD`** → Man speaks (show **left** portrait, hide right).
-  - **Odd `countingTalkD`** → Doctor speaks (show **right** portrait, hide left).
-- Updates `dialogueText` and increments `countingTalkD` every time.
+  **Description of the Doctor dialogue within multiple dialogues**
+   - Press **`D`** to advance the conversation with the Doctor.
+   - Stops automatically when `countingTalkD` reaches `maxCountingTalkD` (`TalkingDoctorEnd()`).
+   - On the first line (`countingTalkD == 0`), runs `SettingDefault()` to init UI.
+   - Fetches the next line via `DialogueManager.scc.getSCCLine("C")`.
+   - Alternates speakers each press:
+    - **Even `countingTalkD`** → Man speaks (show **left** portrait, hide right).
+    - **Odd `countingTalkD`** → Doctor speaks (show **right** portrait, hide left).
+   - Updates `dialogueText` and increments `countingTalkD` every time.
 
 ```csharp
 public void TalkingDoctorContinue(){
@@ -246,13 +245,13 @@ public void TalkingDoctorContinue(){
 
 }
 ```
-(2) MainCharacterInteraction.cs</br>
-- The system checks the distance between the player and each NPC.  
-- If the player is within the defined **interaction distance**, the NPC becomes clickable.  
-- When the player **clicks with the mouse** while inside this range, a raycast is fired from the main camera.  
-- If the ray hits the correct NPC, the corresponding dialogue function (e.g., `DialogTalkPolice()`) is triggered.
+ (2) MainCharacterInteraction.cs</br>
+   - The system checks the distance between the player and each NPC.  
+   - If the player is within the defined **interaction distance**, the NPC becomes clickable.  
+   - When the player **clicks with the mouse** while inside this range, a raycast is fired from the main camera.  
+   - If the ray hits the correct NPC, the corresponding dialogue function (e.g., `DialogTalkPolice()`) is triggered.
 
-This ensures that players can only start a conversation with an NPC when they are close enough and explicitly click on them.
+   This ensures that players can only start a conversation with an NPC when they are close enough and explicitly click on them.
 ```csharp
 private void CheckDistance(Transform target, string targetName, int idx)
 {
