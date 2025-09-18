@@ -3,7 +3,7 @@ These are the projects I created during the Game Development I graduate course.
 
 
 ## Introduction of Projects
-### (1) Breakout game
+### (1) [Breakout Game](http://erigolee.github.io/game-dev-spring2025/builds/breakout-final)
 <img src="https://github.com/user-attachments/assets/933c9d59-90ca-48d0-a374-f9e30923641b" alt="image" width="600" height="372"/> </br>
 1. Description </br>
 - This project is a custom game based on the classic **Breakout** concept. </br>
@@ -111,10 +111,7 @@ void OnCollisionEnter(Collision collision)
 }
 ```
 
-7. Game Link
-
-
-### (2) Simulator game
+### (2) [Simulator Game](http://erigolee.github.io/game-dev-spring2025/builds/simulation-1)
 <img src="https://github.com/user-attachments/assets/5f6e90cd-896c-4a3a-be74-5da2d0637e4b" alt="game screenshot" width="600" height="372"/></br>
 1. Description - **Grid and Cell System** </br>
 - When the game starts, the `GridManager4.cs` script generates a grid of **20 × 20 cells** (total **400 cells**) without overlap.  
@@ -174,9 +171,8 @@ if (Physics.Raycast(ray, out hit))
     }
 }
 ```
-3. Game Link
 
-### (3) People-1 game
+### (3) [People-1 Game](https://erigolee.github.io/game-dev-spring2025/builds/people-2/)
 <img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>
 
 1. Description</br>
@@ -288,10 +284,8 @@ private void CheckDistance(Transform target, string targetName, int idx)
 }
 ```
 
-3. Game Link
 
-
-### (4) platformer game - Whispering Locks
+### (4) [Platformer Game - Whispering Locks](https://erigolee.github.io/game-dev-spring2025/builds/final/AdjustBegScreen/Platformer)
 1. Platformer Game Overview</br>
 - This project is a **platformer-style** game where the player advances by moving a character through the stage.
 
@@ -471,8 +465,6 @@ void SetRandomPatrolTarget()
 - **Start Menu Input (Fixed):** Pressing a button on the start screen could trigger a different button.
 	- ✅ **Fixed:** The input handling on the start screen has been corrected.
 
-7. Game Link
- 
 
 ## License
 - All **source code** in this repository is licensed under the [MIT License](./LICENSE).
