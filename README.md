@@ -113,8 +113,8 @@ void OnCollisionEnter(Collision collision)
 
 
 ### (2) Simulator game
-<img src="https://github.com/user-attachments/assets/5f6e90cd-896c-4a3a-be74-5da2d0637e4b" alt="game screenshot" width="600" height="372"/>
-1. Description
+<img src="https://github.com/user-attachments/assets/5f6e90cd-896c-4a3a-be74-5da2d0637e4b" alt="game screenshot" width="600" height="372"/></br>
+1. Description</br>
 **Grid and Cell System**</br>
 - When the game starts, the `GridManager4.cs` script generates a grid of **20 × 20 cells** (total **400 cells**) without overlap.  
 - Each cell is randomly assigned one of the following attributes: **Water**, **Fire**, **Grass**, or **Road**.  
