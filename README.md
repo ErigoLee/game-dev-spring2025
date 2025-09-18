@@ -148,7 +148,7 @@ for (int x = 0; x < gridSize; x++)
 - When the player clicks with the mouse, a **raycast** is used to detect which cell was clicked.
 - When the player clicks on a cell, the hit point is converted into grid coordinates (x, y).
 - If the coordinates are valid, the corresponding **Cell** object is retrieved.
-- The **panel text** is updated **only when a cell is clicked**, showing contextual information about that cell.
+- The **panel text** is updated **only when a cell is clicked**, showing contextual information about that cell.</br>
 Example: - Clicking a **Water** cell displays:</br>
 **“A calm and stable environment. Reduces fire risk and slows unit movement.”**
 
@@ -173,8 +173,120 @@ if (Physics.Raycast(ray, out hit))
 }
 ```
 ### (3) People-1 game
+<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>/>
+
+1. Description</br>
+This project was built using the **ADialogueSystem.unitypackage** provided by the professor.  
+All dialogue content was organized and stored in a **Google Sheet**:  
+[Dialogue Google Sheet](https://docs.google.com/spreadsheets/d/1bxKhDvQU6dbHUVp_ThVrsOxNvDnRGg2cLrLTWeg6TVs/edit?gid=0#gid=0)  
+
+However, since the professor’s server has been shut down, the dialogue system can no longer be executed in its current form.  
+As a result, the project demonstrates the dialogue structure and data setup, but the live dialogue progression is unavailable.
+
+2. Code
+(1) Dialogue Manager.cs </br>
+- The following code connects and retrieves the dialogue content from the Google Sheet.</br>
+```csharp
+if (useGoogleSheet) {
+    // This will start the asyncronous calls to Google Sheets, and eventually
+    // it will give a value to scc, and also call LoadInitialHistory().
+    GoogleSheetSimpleConditionalConversation gs_ssc = gameObject.AddComponent<GoogleSheetSimpleConditionalConversation>();
+    gs_ssc.googleSheetDocID = googleSheetDocID;
+} else {
+    scc = new SimpleConditionalConversation("data");
+    LoadInitialSCCState();
+}
+```
+
+### Description of the Doctor dialogue within multiple dialogues
+- Press **`D`** to advance the conversation with the Doctor.
+- Stops automatically when `countingTalkD` reaches `maxCountingTalkD` (`TalkingDoctorEnd()`).
+- On the first line (`countingTalkD == 0`), runs `SettingDefault()` to init UI.
+- Fetches the next line via `DialogueManager.scc.getSCCLine("C")`.
+- Alternates speakers each press:
+  - **Even `countingTalkD`** → Man speaks (show **left** portrait, hide right).
+  - **Odd `countingTalkD`** → Doctor speaks (show **right** portrait, hide left).
+- Updates `dialogueText` and increments `countingTalkD` every time.
+
+```csharp
+public void TalkingDoctorContinue(){
+		
+    //First dialogue
+    if (Input.GetKeyDown(KeyCode.D)){
+        if (countingTalkD >= maxCountingTalkD){
+            TalkingDoctorEnd();
+        }
+        else{
+            if(countingTalkD == 0){
+            SettingDefault();
+            }
+            string line = DialogueManager.scc.getSCCLine("C");
+            if(countingTalkD % 2 == 0){
+                textObj.SetActive(true);
+                left.SetActive(true);
+                right.SetActive(false);
+                //dialoguePanel.material = dialoguePanelImageLeft;
+                Debug.Log("Man says: " + line);
+                dialogueText.text = line;
+                countingTalkD++;
+            }
+            else{
+                textObj.SetActive(true);
+                left.SetActive(false);
+                right.SetActive(true);
+                //dialoguePanel.material = dialoguePanelImageRight;
+                Debug.Log("Doctor says: " + line);
+                dialogueText.text = line;
+                countingTalkD++;
+            }
+        }
+			
+    }
+
+}
+```
+(2) MainCharacterInteraction.cs</br>
+- The system checks the distance between the player and each NPC.  
+- If the player is within the defined **interaction distance**, the NPC becomes clickable.  
+- When the player **clicks with the mouse** while inside this range, a raycast is fired from the main camera.  
+- If the ray hits the correct NPC, the corresponding dialogue function (e.g., `DialogTalkPolice()`) is triggered.
+
+This ensures that players can only start a conversation with an NPC when they are close enough and explicitly click on them.
+```csharp
+private void CheckDistance(Transform target, string targetName, int idx)
+{
+    if (target == null) return;
+
+    float distance = Vector3.Distance(male.position, target.position);
+    //Debug.Log($"{targetName} : {distance}");
+    if (distance <= interactionDistance)
+    {
+         //Debug.Log("inside distance!");
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform == target)
+                {
+                    Debug.Log($"[SUCCESS] You clicked on {targetName} within {interactionDistance}m! (Actual Distance: {distance:F2})");
+                        
+                    switch(idx){
+                        case 1:
+                            gameManager.DialogTalkPolice();
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
 
 ### (4) platformer game
+
 
 ## License
 - All **source code** in this repository is licensed under the [MIT License](./LICENSE).
