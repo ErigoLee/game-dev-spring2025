@@ -27,7 +27,8 @@ Level 3 reuses the basic structure of Level 2, but adds a control feature: press
 - Arrow keys were being registered as continuous inputs on the selection screen, which sometimes prevented choosing the intended level.
 - A debounce interval (timeBetweenInputs) was introduced to prevent rapid repeats and ensure accurate level selection.
 
-6. Code </br>
+6. Code
+
 (1) GameManager.cs </br>
 The following function is part of the **GameManager** code.  </br>
 It implements **page navigation** using the Up and Down arrow keys.  </br>
@@ -119,7 +120,8 @@ void OnCollisionEnter(Collision collision)
 - Each cell is randomly assigned one of the following attributes: **Water**, **Fire**, **Grass**, or **Road**.  
 - After the grid is created, clicking on any cell with the mouse displays the cell’s information in the corresponding panel UI image.
 
-2. Code</br>
+2. Code
+
 (1) GridManager4.cs</br>
 - The nested loops place each cell at `(x * cellSpacing, 0, y * cellSpacing)`, creating a uniform **gridSize × gridSize** layout with consistent spacing in both X (columns) and Z (rows) directions.
 - On instantiation, each cell receives one of four materials — **Water**, **Fire**, **Grass**, **Road** — chosen **uniformly at random (25% each)** so that every playthrough yields a different grid composition.
@@ -172,7 +174,7 @@ if (Physics.Raycast(ray, out hit))
 }
 ```
 ### (3) People-1 game
-<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/></br>
+<img src="https://github.com/user-attachments/assets/32c8ca67-5ff9-4c6e-a5c6-512890c23f5c" alt="game screenshot" width="400" height="372"/>
 
 1. Description</br>
 This project was built using the **ADialogueSystem.unitypackage** provided by the professor.  
