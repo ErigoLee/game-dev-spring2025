@@ -304,6 +304,7 @@ private void CheckDistance(Transform target, string targetName, int idx)
 - **NPC Dialogue:** A **dialogue system** allows the player to **interact with NPCs**.
 
 3. In-Game screens</br>
+
 **Start Menu**
 - At launch, you can choose between **Tutorial** and **Game** scenes.</br>
 - Selection is done via **mouse click**.
@@ -424,6 +425,7 @@ public void TalkingNPCLevel2Continue(){
 ```
 
 (3) EnemyAI.cs </br>
+
 **FSM State Implementation**
 - This project includes an FSM (Finite State Machine) system implemented based on what I learned during the **Game Programming II** course in my undergraduate studies.  
 - The FSM framework was applied to manage enemy behaviors such as **patrolling**, **chasing**, and **attacking**, ensuring clear state transitions and maintainable gameplay logic.
