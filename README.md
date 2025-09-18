@@ -27,7 +27,7 @@ Level 3 reuses the basic structure of Level 2, but adds a control feature: press
 - Arrow keys were being registered as continuous inputs on the selection screen, which sometimes prevented choosing the intended level.
 - A debounce interval (timeBetweenInputs) was introduced to prevent rapid repeats and ensure accurate level selection.
 
-6. Code
+6. Code </br>
 	(1) GameManager.cs </br>
  		- The following function is part of the **GameManager** code.  </br>
  		- It implements **page navigation** using the Up and Down arrow keys.  </br>
